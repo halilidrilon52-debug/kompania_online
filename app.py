@@ -1,5 +1,5 @@
 import streamlit as st 
-st.title(" dyqani online")
+st.title("Online Store")
 
 def encrypt_password(password):
     result = ""
@@ -14,81 +14,81 @@ def encrypt_password(password):
 emri_valid = email_valid = numri_valid = adresa_valid = password_valid = kodi_postar_valid = False 
 encrypted_password = None
 
-emri=st.text_input("Ju lutem shkruani emrin tuaj dhe mbiemrin tuaj")
+emri = st.text_input("Please enter your first name and last name")
 
 if not emri:
-    st.error("Ju lutem shkruani emrin tuaj dhe mbiemrin tuaj mos e lerni bosh.")
+    st.error("Please enter your first name and last name, do not leave it empty.")
     emri_valid = False
 else:
     
     if any(char.isdigit() for char in emri):
-        st.error("Emri dhe mbiemri nuk duhet të përmbajë numra.")
-    elif" " not in emri.strip():
-        st.error("Ju lutem shkruani emrin dhe mbiemrin tuaj të plotë.") 
+        st.error("First name and last name must not contain numbers.")
+    elif " " not in emri.strip():
+        st.error("Please enter your full first name and last name.") 
     else:
-        st.success("Emri dhe mbiemri juaj janë të vlefshëm.")
+        st.success("Your first name and last name are valid.")
         emri_valid = True
  
         
         
-email=st.text_input("Ju lutem shkruani emailin tuaj",type="default")
+email = st.text_input("Please enter your email", type="default")
 if email:
-    if "@" not in email or "."not in email:
-        st.error("ju keni harruar simbolin @ ne email ose e keni harruar nje pike(.)  ju lutem rishikone emailin tuaj")
-    elif  not email.endswith((".com",".net",".org")):
-        st.error("Ju lutem sigurohuni që emaili juaj të përfundojë me .com, .net, ose .org")
-    elif len(email)>90:
-        st.error("Email është shumë i gjatë (max 90 karaktere)")
+    if "@" not in email or "." not in email:
+        st.error("You forgot the @ symbol in your email or you forgot a dot (.). Please review your email.")
+    elif not email.endswith((".com", ".net", ".org")):
+        st.error("Please make sure your email ends with .com, .net, or .org")
+    elif len(email) > 90:
+        st.error("Email is too long (max 90 characters)")
     else:
-        st.success("Emaili juaj është i vlefshëm.")
+        st.success("Your email is valid.")
         email_valid = True
     
-numri=st.text_input("Ju lutem shkruani numrin tuaj te telefonit" )
+numri = st.text_input("Please enter your phone number")
 if numri:
     if numri and not numri.isdigit():
-        st.error("Numri juaj duhet te shenohet vetum me numra KUJDES!?.")
+        st.error("Your number must be written using numbers only. BE CAREFUL!")
     elif len(numri) != 9:
-        st.error("Numri juaj i telefonit duhet të ketë saktësisht 9 shifra.")
+        st.error("Your phone number must contain exactly 9 digits.")
     elif not numri.startswith(("044", "045", "046", "048", "049")):
-        st.error("Numri i telefonit duhet me fillu me 044,045,046,048,049.")
+        st.error("The phone number must start with 044, 045, 046, 048, or 049.")
     else:
-        st.success("Numri juaj i telefonit është i vlefshëm.")
+        st.success("Your phone number is valid.")
         numri_valid = True
                 
-adresa = st.text_input("Ju lutem shkruani adresen tuaj")
-kodi_postar = st.text_input("Ju lutem shkruani kodin postar")
+adresa = st.text_input("Please enter your address")
+kodi_postar = st.text_input("Please enter your postal code")
 if adresa and kodi_postar:
     if not adresa.strip():
-        st.error("Ju lutem shkruani adresën tuaj!")
+        st.error("Please enter your address!")
     elif not kodi_postar.isdigit():
-        st.error("Kodi postar duhet të shënohet vetëm me numra!")
+        st.error("Postal code must contain numbers only!")
     elif len(kodi_postar) != 5:
-        st.error("Kodi postar duhet të ketë saktësisht 5 shifra!")
+        st.error("Postal code must contain exactly 5 digits!")
     else:
-        st.success("Adresa dhe kodi postar janë të vlefshëm!")
+        st.success("Address and postal code are valid!")
         adresa_valid = True
         kodi_postar_valid = True
 
-password = st.text_input("Ju lutem shkruani fjalekalimin tuaj", type="password")
-confirm_password = st.text_input("Ju lutem konfirmoni fjalekalimin tuaj", type="password")
+password = st.text_input("Please enter your password", type="password")
+confirm_password = st.text_input("Please confirm your password", type="password")
 
 if password and confirm_password:
     password = password.strip()
     confirm_password = confirm_password.strip()
     
     if password and len(password) < 8:
-        st.error("Fjalekalimi duhet të ketë të paktën 8 karaktere.")
+        st.error("Password must contain at least 8 characters.")
     elif password != confirm_password:
-        st.error("Fjalekalimet nuk përputhen. Ju lutem provoni përsëri.")   
+        st.error("Passwords do not match. Please try again.")   
     else:
         encrypted_password = encrypt_password(password)
         password_valid = True
     
-if st.button("Regjistrohu"):    
+if st.button("Register"):    
     if emri_valid and email_valid and numri_valid and adresa_valid and kodi_postar_valid and password_valid:
-        st.success("Të gjitha të dhënat janë të vlefshme dhe regjistrimi është i suksesshëm!")
-        st.success("Fjalëkalimi u enkriptua me sukses!")
-        st.write("Fjalëkalimi juaj i enkriptuar është:", encrypted_password)
+        st.success("All data is valid and registration was successful!")
+        st.success("Password was encrypted successfully!")
+        st.write("Your encrypted password is:", encrypted_password)
         st.balloons()
     else:
-        st.error("Ju lutem sigurohuni që të gjitha fushat të jenë të plota dhe të vlefshme para regjistrimit.")
+        st.error("Please make sure all fields are complete and valid before registration.")
